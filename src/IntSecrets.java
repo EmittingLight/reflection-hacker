@@ -1,10 +1,12 @@
 public class IntSecrets {
-    private static final int NUMBER = 42;
-    private static final boolean FLAG = true;
+    public static int NUMBER = 42;
+    public static boolean FLAG = true;
 
-    public static void printSecrets() {
-        System.out.println("🔢 Число: " + NUMBER);
-        System.out.println("🔘 Флаг: " + FLAG);
+    public static void printSecrets(String prefix) {
+        System.out.println(prefix);
+        System.out.println("\uD83D\uDD22 Число: " + NUMBER);
+        System.out.println("\uD83D\uDD18 Флаг: " + FLAG);
     }
 }
+
 

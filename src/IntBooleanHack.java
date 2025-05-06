@@ -3,27 +3,23 @@ import java.lang.reflect.Field;
 
 public class IntBooleanHack {
     public static void main(String[] args) throws Exception {
-        System.out.println("🧪 До взлома:");
-        IntSecrets.printSecrets();
+        IntSecrets.printSecrets("\uD83E\uDE93 До взлома:");
 
-        Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
-        unsafeField.setAccessible(true);
-        Unsafe unsafe = (Unsafe) unsafeField.get(null);
+        Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
+        theUnsafe.setAccessible(true);
+        Unsafe unsafe = (Unsafe) theUnsafe.get(null);
 
         Field numberField = IntSecrets.class.getDeclaredField("NUMBER");
-        numberField.setAccessible(true);
-        Object base1 = unsafe.staticFieldBase(numberField);
-        long offset1 = unsafe.staticFieldOffset(numberField);
-        unsafe.putInt(base1, offset1, 999);
-
         Field flagField = IntSecrets.class.getDeclaredField("FLAG");
-        flagField.setAccessible(true);
-        Object base2 = unsafe.staticFieldBase(flagField);
-        long offset2 = unsafe.staticFieldOffset(flagField);
-        unsafe.putBoolean(base2, offset2, false);
 
-        System.out.println("😈 После взлома:");
-        IntSecrets.printSecrets();
+        Object staticBaseNumber = unsafe.staticFieldBase(numberField);
+        long offsetNumber = unsafe.staticFieldOffset(numberField);
+        unsafe.putInt(staticBaseNumber, offsetNumber, 999);
+
+        Object staticBaseFlag = unsafe.staticFieldBase(flagField);
+        long offsetFlag = unsafe.staticFieldOffset(flagField);
+        unsafe.putBoolean(staticBaseFlag, offsetFlag, false);
+
+        IntSecrets.printSecrets("\uD83D\uDE08 После взлома:");
     }
 }
-
